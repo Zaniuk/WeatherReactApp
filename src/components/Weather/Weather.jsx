@@ -15,7 +15,7 @@ export default function Weather() {
   useEffect(() => {
     setTimeout(() => {
       setTime(parseTime(new Date()))
-    }, 60000);
+    }, 30000);
     const sucess = (position) => {
       const { latitude, longitude } = position.coords;
       uri = `https://api.openweathermap.org/data/2.5/weather?lang=es&units=metric&lat=${latitude}&lon=${longitude}&appid=${key}`;

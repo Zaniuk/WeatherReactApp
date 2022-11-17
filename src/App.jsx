@@ -22,33 +22,53 @@ function App() {
   const [time, setTime] = useState(getCurrentTime(new Date()))
 
   const [speed, setSpeed] = useState(0)
+  const [location, setLocation] = useState('')
 
   useEffect(function () {
+    // Get the user's location
+    navigator.geolocation.getCurrentPosition(function (position) {
+      const lat = position.coords.latitude
+      const lon = position.coords.longitude
+      setLocation(lat, lon)
+    // Get the weather data
+    getWeatherData(lat, lon).then(function (data) {
+      setTemp(data.main.temp)
+      setFeels(data.main.feels_like)
+      setWeatherIcon(`http://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`)
+      setDesc(data.weather[0].description)
+      setCity(data.name)
+      setHumidity(data.main.humidity)
+      setSpeed(data.wind.speed)
+    })
+  })
+
+    
+      
 
     setTimeout(() => {
       setTime(getCurrentTime(new Date()))
     }, 60000)
 
-    getWeatherData().then(res => {
-      const { main, weather, name, wind } = res
-      const { temp, feels_like, humidity } = main
-      const { icon, description } = weather[0]
-      const {speed} = wind
+    // getWeatherData().then(res => {
+    //   const { main, weather, name, wind } = res
+    //   const { temp, feels_like, humidity } = main
+    //   const { icon, description } = weather[0]
+    //   const {speed} = wind
       
-      setTemp(Math.round(temp))
+    //   setTemp(Math.round(temp))
 
-      setFeels(Math.round(feels_like))
+    //   setFeels(Math.round(feels_like))
 
-      setWeatherIcon(`http://openweathermap.org/img/wn/${icon}@4x.png`)
+    //   setWeatherIcon(`http://openweathermap.org/img/wn/${icon}@4x.png`)
 
-      setDesc(description.toUpperCase())
+    //   setDesc(description.toUpperCase())
 
-      setCity(name)
+    //   setCity(name)
 
-      setHumidity(humidity)
+    //   setHumidity(humidity)
       
-      setSpeed(speed)
-    })
+    //   setSpeed(speed)
+    // })
   }, [])
 
   return (

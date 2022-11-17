@@ -13,9 +13,9 @@ export function getCurrentTime(date) {
     return `${hours}:${minutes}`
 }
 
-export async function getWeatherData() {
+export async function getWeatherData(lat, lon) {
     const key = '7931869ca227fbe4b9aca2ff4bb36cc0'
-    const uri = `https://api.openweathermap.org/data/2.5/weather?units=metric&lang=es&lat=35&lon=139&appid=${key}`
+    const uri = `https://api.openweathermap.org/data/2.5/weather?units=metric&lang=es&lat=${lat}&lon=${lon}&appid=${key}`
 
     const data = await fetch(uri).then(res => res.json())
     return data
